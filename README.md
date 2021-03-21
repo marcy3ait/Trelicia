@@ -1,5 +1,5 @@
 # Trelicia
-Implementação de númerica de solver de treliças tridimensionais como projeto final na matéria de introdução a elementos finitos, ministrada na Universidade Estadual Paulista - UNESP (São João da Boa Vista) para curso Engenharia aeronáutica pelo Professor Dr. Murilo Sartorato.
+Implementação de númerica de um solver para treliças tridimensionais como projeto final na matéria de introdução a elementos finitos, ministrada na Universidade Estadual Paulista - UNESP (São João da Boa Vista) para curso Engenharia aeronáutica pelo Professor Dr. Murilo Sartorato.
 
 ## Estudo de Casos
 A implementação realizada permite realizar os calculos dos deslocamentos, tensões, modos de vibrar e frequências naturais da estrutura. Abaixo são apresentados dois resultados parciais decorrentes da implementação, para mais detalhes dos estudos de caso consulte o [relátorio final](https://github.com/marcy3ait/Trelicia/blob/master/Relatorio_Elementos_Finitos.pdf).
