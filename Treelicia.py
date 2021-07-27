@@ -258,7 +258,6 @@ if __name__ == '__main__':
 
     ## condicao de contorno
     contorno = ( #(no, grau_liberdade, cc)
-           (0,1,0),
            (1,0,0),
            (1,1,0),
            (1,2,0),
@@ -278,14 +277,15 @@ if __name__ == '__main__':
     Deslocamento, reacoes = model1.solve()
     tensoes = model1.getStress(deslo= Deslocamento)
     omega, phi = model1.getmodoVibration()
-
+    
     
     import plotter3D as plott
     # plotando os dados obtidos 
 
     pos = plott.Posprocess(model1)
-    pos.plotDeslocamento(Deslocamento)
-
+    #pos.plotDeslocamento3D(Deslocamento)
+    pos.plotStress3D(tensoes)
+    
     # printando os resultados 
     print('=============================================')
     print('\t\tDeslocamentos')
@@ -311,6 +311,5 @@ if __name__ == '__main__':
     for index in range(len(omega)):
         print('{0:1.2f} \t\t {1:4.4f} '.format(index, omega[index]))
 
-
-
+    
 # %%

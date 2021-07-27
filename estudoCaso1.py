@@ -6,6 +6,7 @@
 
 
 #%%
+from numpy import testing
 from Treelicia import Fem3d
 import numpy as np
 import plotter3D as plott
@@ -64,10 +65,13 @@ import plotter3D as plott
 pos = plott.Posprocess(model1)
 
 # plotando deslocamento
-pos.plotDeslocamento(Deslocamento)
+pos.plotDeslocamento3D(Deslocamento)
+
+# plotando tensao
+pos.plotStress3D(tensoes)
 
 # plotando modo de vibrar da estrutura 
-pos.plotModoVibra(phi, mode = 2)
+pos.plotModoVibra3D(phi, mode = 2)
 
 # printando os resultados 
 print('=============================================')
