@@ -110,6 +110,7 @@ plt.show()
 F = 1000
 forcas = (
     (15, 0, -F),
+    (15, 1, 0.75*F),
 )
 
 contorno = (

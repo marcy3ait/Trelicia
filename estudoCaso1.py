@@ -32,7 +32,7 @@ elementos = (
 
    ## forcas
 forcas = ( #(no, grau_liberdade, forca)
-    (3,2,-1000.0),
+    (3,2,-100.0),
 )
 
 ## condicao de contorno
@@ -51,7 +51,7 @@ contorno = ( #(no, grau_liberdade, cc)
 )
 
 E2 = 1.2e6#210e9 # n/mm2
-A2 =   [0.302, 0.729, 0.187, 0.302, 0.729, 0.187] #[0.302, 0.729, 0.187]#[10*10**-4, 20*10**-4, 30*10**-4]
+A2 =   [0.302, 0.729, 0.187, 0.302, 0.729, 0.187] 
 rho =  [2.76e-3, 2.86e-3, 2.96e-3, 2.66e-3, 2.56e-3, 2.46e-3]#2.76e-3
 
 model1 = Fem3d(nodes,elementos,forcas,contorno,E2,A2,rho)

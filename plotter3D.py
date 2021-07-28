@@ -1,4 +1,3 @@
-#%%
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import numpy as np
@@ -156,6 +155,7 @@ class Posprocess():
 
         for pontos in self.contorno:
             ax.scatter3D(self.nodes[pontos[0]][1], self.nodes[pontos[0]][2], self.nodes[pontos[0]][3], marker = '*', color = 'black')
+            
 
         norm = plt.Normalize(np.min(stress), np.max(stress))
         cmap = plt.get_cmap('gist_rainbow')
@@ -167,8 +167,11 @@ class Posprocess():
             ax.plot3D(  [self.nodes[elem[1]][1], self.nodes[elem[2]][1]], [self.nodes[elem[1]][2],self.nodes[elem[2]][2]], [self.nodes[elem[1]][3],self.nodes[elem[2]][3]], linewidth=(self.A[index]/max(self.A))*5, markersize=5, c=c[index])
             # ([Xelem1,Xelem2], [Yelem1,Yelem2], [Zelem1,Zelem2])
 
+            ax.text(x = self.nodes[elem[1]][1] , y = self.nodes[elem[1]][2] , z = self.nodes[elem[1]][3] , s = str(self.nodes[elem[1]][0]) )
+            #ax.text(x = self.nodes[elem[2]][1] , y = self.nodes[elem[2]][2] , z = self.nodes[elem[2]][3] , s = str(self.nodes[elem[2]][0]) )
+
         cbar = plt.colorbar(cm.ScalarMappable(norm=norm, cmap=cmap), ax=ax)
-        cbar.set_label('Stress [Mpa]')
+        cbar.set_label('Stress')
         plt.show()  
 
 
@@ -176,9 +179,4 @@ class Posprocess():
         pass
 
 if __name__ == '__main__':
-   
-    
-    
-
-
-# %%
+    pass
