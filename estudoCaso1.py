@@ -65,13 +65,13 @@ import plotter3D as plott
 pos = plott.Posprocess(model1)
 
 # plotando deslocamento
-pos.plotDeslocamento3D(Deslocamento)
+#pos.plotDeslocamento3D(Deslocamento)
 
 # plotando tensao
 pos.plotStress3D(tensoes)
 
 # plotando modo de vibrar da estrutura 
-pos.plotModoVibra3D(phi, mode = 2)
+#pos.plotModoVibra3D(phi, mode = 2)
 
 # printando os resultados 
 print('=============================================')
@@ -98,5 +98,5 @@ print(f'Modos \t\t Freq. [Hz] ')
 for index in range(len(omega)):
     print('{0:1.2f} \t\t {1:4.4f} '.format(index, omega[index]))
 
-
+print(nodes)
 # %%

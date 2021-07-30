@@ -1,4 +1,5 @@
 #%%
+from operator import lt
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt 
 import numpy as np
@@ -107,10 +108,11 @@ for node in nodes:
     #ax.text(x = nodes[elem[2]][1] , y = nodes[elem[2]][2] , z = nodes[elem[2]][3] , s = str(nodes[elem[2]][0]) )
 plt.show()
 '''
-F = 1000
+F = 100000 #N
 forcas = (
-    (15, 0, -F),
-    (15, 1, 0.75*F),
+    #(15, 0, -F),
+    (15, 1, -0.75*F),
+    (15, 2, 0.5*F),
 )
 
 contorno = (
@@ -125,29 +127,28 @@ contorno = (
     (14,2,0)
 )
 
-E2 = 73e9#1.2e6#210e9 # n/mm2
-#73*10**9
-#2.78*10-3
-A2 =  0.302e-3# [0.302, 0.729, 0.187, 0.302, 0.729, 0.187] #[0.302, 0.729, 0.187]#[10*10**-4, 20*10**-4, 30*10**-4]
-rho =  2780#[2.76e-3, 2.86e-3, 2.96e-3, 2.66e-3, 2.56e-3, 2.46e-3]#2.76e-3
+E2 = 73e9#gpa aluminio
+A2 =  0.0013# m^2 - diametro de 4 cm
+rho =  27000# kg/m^3
 
 model1 = Fem3d(nodes,elementos,forcas,contorno,E2,A2,rho)
 Deslocamento, reacoes = model1.solve()
 tensoes = model1.getStress(deslo= Deslocamento)
 omega, phi = model1.getmodoVibration()
 
-
+tensoes = np.array(tensoes)*(10**-6) #Mpa
 import plotter3D as plott
 # plotando os dados obtidos 
 
 pos = plott.Posprocess(model1)
 
 # plotando deslocamento
-pos.plotDeslocamento3D(Deslocamento)
-pos.plotStress3D(tensoes)
+#pos.plotDeslocamento3D(Deslocamento)
+pos.plotStress3D(tensoes, var='[Mpa]')
+plt.show()
 
 # plotando modo de vibrar da estrutura 
-pos.plotModoVibra3D(phi, mode = 0)
+#pos.plotModoVibra3D(phi, mode = 0)
 
 # printando os resultados 
 print('=============================================')
@@ -174,6 +175,19 @@ print(f'Modos \t\t Freq. [Hz] ')
 for index in range(len(omega)):
     print('{0:1.2f} \t\t {1:4.4f} '.format(index, omega[index]))
 
+volu = 0
+ltotal = 0
+for index, elem in enumerate(elementos):
+    # index é o elemento
+    area =  0.0013
+    x = nodes[elem[1]][1] - nodes[elem[2]][1]
+    y = nodes[elem[1]][2] - nodes[elem[2]][2]
+    z = nodes[elem[1]][3] - nodes[elem[2]][3]
+    L = np.sqrt(x**2+y**2+z**2)
+    ltotal+=L
+    volu += area*L
 
+print('Volume da estrura: ',volu)
+print('Tensão maxima: ', max(np.abs(tensoes)))
 
 # %%

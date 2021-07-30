@@ -1,3 +1,4 @@
+from matplotlib.colors import Normalize
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import numpy as np
@@ -15,6 +16,7 @@ class Posprocess():
         self.elementos =  model.elementos
         self.contorno = model.contorno
         self.A = model.A
+        self.forcas = model.forcas
         
 
         # material
@@ -72,9 +74,10 @@ class Posprocess():
         ax.set_title(f'Deslocamento da estrutura')
 
         for pontos in self.contorno:
-            #print(self.nodes[pontos[0]][1], self.nodes[pontos[0]][2], self.nodes[pontos[0]][3])
+            #plot cc
             ax.scatter(self.nodes[pontos[0]][1], self.nodes[pontos[0]][2], marker = '*', color = 'black')
 
+   
     
         for elem in self.elementos:
 
@@ -140,7 +143,7 @@ class Posprocess():
         #plt.axis('equal')
         plt.show()
 
-    def plotStress3D(self, stress):
+    def plotStress3D(self, stress, var=''):
         fig = plt.figure('Plote das tensões')
         #ax = fig.add_subplot(111)
         ax = plt.axes(projection='3d')
@@ -155,7 +158,9 @@ class Posprocess():
 
         for pontos in self.contorno:
             ax.scatter3D(self.nodes[pontos[0]][1], self.nodes[pontos[0]][2], self.nodes[pontos[0]][3], marker = '*', color = 'black')
-            
+        
+       
+
 
         norm = plt.Normalize(np.min(stress), np.max(stress))
         cmap = plt.get_cmap('gist_rainbow')
@@ -171,8 +176,8 @@ class Posprocess():
             #ax.text(x = self.nodes[elem[2]][1] , y = self.nodes[elem[2]][2] , z = self.nodes[elem[2]][3] , s = str(self.nodes[elem[2]][0]) )
 
         cbar = plt.colorbar(cm.ScalarMappable(norm=norm, cmap=cmap), ax=ax)
-        cbar.set_label('Stress')
-        plt.show()  
+        cbar.set_label('Stress '+var)
+        #plt.show()  
 
 
     def plotStress2D(): 

@@ -270,15 +270,16 @@ if __name__ == '__main__':
     )
 
     E2 = 1.2e6#210e9 # n/mm2
-    A2 = [0.302, 0.729, 0.187]#[10*10**-4, 20*10**-4, 30*10**-4]
+    A2 = [2*0.302, 0.729, 0.187]#[10*10**-4, 20*10**-4, 30*10**-4]
     rho = 2.76e-3
 
     model1 = Fem3d(nodes,elementos,forcas,contorno,E2,A2,rho)
     Deslocamento, reacoes = model1.solve()
     tensoes = model1.getStress(deslo= Deslocamento)
-    omega, phi = model1.getmodoVibration()
+    print(max(np.abs(tensoes)))
+    #omega, phi = model1.getmodoVibration()
     
-    
+    """
     import plotter3D as plott
     # plotando os dados obtidos 
 
@@ -311,5 +312,5 @@ if __name__ == '__main__':
     for index in range(len(omega)):
         print('{0:1.2f} \t\t {1:4.4f} '.format(index, omega[index]))
 
-    
+    """
 # %%
