@@ -25,3 +25,13 @@ A otimização, area que busca encontrar soluções otimas para os problemas, pe
 
 
 A ideia aqui é usar um algoritmo genetico para otimizar um estrutura treliçada, tendo como variaveis de otimização as areas das seções transversais de cada tubo. Tendo como funções de avaliação a tensão no elemento de treliça e o volume da estrutura, buscando minimizar a tensão e o volume da estrutura. Para isso vamos usar a biblioteca de algoritmos géneticos DEAP e o algoritmo multiobjetivo NSGA II.
+
+<p align="left">
+  <img src="https://github.com/marcy3ait/Trelicia/blob/master/img/problema.png" width="650" title="estrutura sem otimização">
+ 
+</p>
+
+<p align="right">
+  <img src="https://github.com/marcy3ait/Trelicia/blob/master/img/solucao_otima.png" width="650" title="estrutura sem otimização">
+ 
+</p>
