@@ -99,7 +99,7 @@ elementos.extend(elementos8)
 
 elementos = tuple( [ (j, elementos[j][0], elementos[j][1]) for j in range(len(elementos))] )
 
-F = 100000 #N
+F = 10000 #N
 forcas = (
     #(15, 0, -F),
     (15, 1, -0.75*F),
@@ -227,7 +227,7 @@ if __name__ == "__main__":
     import plotter3D as plott
 
     [pop, logger, hof] = main(300, 100)
-    best = hof.items[-1]
+    best = hof.items[-13]
     print()
     print("Melhor Solucao = ",best, volume(best))
     print("Fitness do melhor individuo = ", best.fitness.values[0])
@@ -249,7 +249,7 @@ if __name__ == "__main__":
     model2 = Fem3d(nodes,elementos,forcas,contorno,E2,0.0013,rho)
     Deslocamento2, reacoes2 = model2.solve()
     tensoes2 = model2.getStress(deslo= Deslocamento2)
-    tensoes2 = np.array(tensoes2)*(10**-6) #mpa
+    tensoes2 = np.array(tensoes2) #mpa
     pos = plott.Posprocess(model2)
     pos.plotStress3D(tensoes2, var='[Mpa]')
 

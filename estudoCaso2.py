@@ -108,7 +108,7 @@ for node in nodes:
     #ax.text(x = nodes[elem[2]][1] , y = nodes[elem[2]][2] , z = nodes[elem[2]][3] , s = str(nodes[elem[2]][0]) )
 plt.show()
 '''
-F = 100000 #N
+F = 10000 #N
 forcas = (
     #(15, 0, -F),
     (15, 1, -0.75*F),
