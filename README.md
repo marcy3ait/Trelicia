@@ -20,3 +20,8 @@ Segundo modo de vibrar da cauda treliçada do helicóptero BELL 47G-2.
  
 </p>
 
+## Estudo de otimização usando Trelicia
+A otimização, area que busca encontrar soluções otimas para os problemas, permeia todas as areas da engenharia, desde a parte de projeto conceitual onde esta é usada para conceitos conceituais de projetos, mas também é muito usada na remanufatura de projetos, tentado otimizar esse quanto a um dado objetivo. 
+
+
+A ideia aqui é usar um algoritmo genetico para otimizar um estrutura treliçada, tendo como variaveis de otimização as areas das seções transversais de cada tubo. Tendo como funções de avaliação a tensão no elemento de treliça e o volume da estrutura, buscando minimizar a tensão e o volume da estrutura. Para isso vamos usar a biblioteca de algoritmos géneticos DEAP e o algoritmo multiobjetivo NSGA II.
