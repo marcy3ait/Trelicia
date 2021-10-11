@@ -14,7 +14,8 @@ from Treelicia import Fem3d
 import numpy as np
 import plotter3D as plott
 import matplotlib.pyplot as plt
-
+import multiprocessing
+import time
 from deap import algorithms
 from deap import base
 from deap import creator
@@ -204,8 +205,11 @@ def main(max_generations, population_size):
     LAMBDA = 100
     CXPB = 0.7
     MUTPB = 0.2
+    
 
     random.seed(64)
+    pool = multiprocessing.Pool(processes=4)
+    toolbox.register("map", pool.map)
     
     pop = toolbox.population(n=MU)
     hof = tools.ParetoFront()
@@ -225,10 +229,12 @@ def main(max_generations, population_size):
 
 if __name__ == "__main__":
     import plotter3D as plott
-
+    start = time.time()
     [pop, logger, hof] = main(300, 100)
+    finish = time.time()
     best = hof.items[-13]
     print()
+    print("tempo final: ",finish-start)
     print("Melhor Solucao = ",best, volume(best))
     print("Fitness do melhor individuo = ", best.fitness.values[0])
     x = []
@@ -282,3 +288,4 @@ if __name__ == "__main__":
 
 #Volume da estrura:  0.09820291580533828
 #Tensão maxima:  368.6936618400466
+#154.73

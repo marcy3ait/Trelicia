@@ -4,6 +4,7 @@
 #%%
 from otimizacao_estudoCaso2 import AREA_REF
 import random
+import multiprocessing
 
 from Treelicia import Fem3d
 import numpy as np
@@ -68,15 +69,16 @@ MAX_ATRIB = 10
 AREA_REF = 0.2
 
 def fitness(individual):
-
+    individual = np.array(individual)
     #crossSection do macarrao 1.2 #mm^2
     try:
         A2 = AREA_REF*individual
+        
         model1 = Fem3d(nodes,elementos,forcas,contorno,E2,A2,rho)
         Deslocamento, reacoes = model1.solve()
         tensoes = model1.getStress(deslo= Deslocamento)
     except:
-        return 1000
+        return 10**12,
     return max(np.abs(tensoes)),
 
 def volume(individuo):
@@ -95,13 +97,14 @@ def volume(individuo):
 def checkGeometria(individuo):
     # pacote de macarrao tem 500 fios
     vol = volume(individuo)
+    #print(vol)
     if (vol > 0. and vol <= 7000.):
         return True 
     
     return False
 
 creator.create("FitnessMax", base.Fitness, weights=(-1.0,))
-creator.create("Individual", np.ndarray, fitness=creator.FitnessMax)
+creator.create("Individual", list, fitness=creator.FitnessMax)
 
 toolbox = base.Toolbox()
 
@@ -110,16 +113,18 @@ toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.att
 toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 
 toolbox.register("evaluate", fitness)
-toolbox.decorate("evaluate", tools.DeltaPenalty(checkGeometria, [10**10]))
+#toolbox.decorate("evaluate", tools.DeltaPenalty(checkGeometria, [10**10])) # funcao de penalidade da conflito com multithreads
 toolbox.register("mate", tools.cxTwoPoint)
 toolbox.register("mutate", tools.mutUniformInt, low = MIN_ATRIB, up = MAX_ATRIB, indpb = 0.08)
 toolbox.register("select", tools.selTournament, tournsize=5)
 
 def main():
     random.seed(64)
+    pool = multiprocessing.Pool(processes=4)
+    toolbox.register("map", pool.map)
     
     pop = toolbox.population(n=300)
-    hof = tools.HallOfFame(15, similar=np.array_equal)
+    hof = tools.HallOfFame(15)
     
     stats = tools.Statistics(lambda ind: ind.fitness.values)
     stats.register("avg", np.mean)
@@ -127,22 +132,26 @@ def main():
     stats.register("min", np.min)
     stats.register("max", np.max)
     
-    algorithms.eaSimple(pop, toolbox, cxpb=0.5, mutpb=0.2, ngen=50,stats=stats, halloffame=hof, verbose=True)
+    pop, logger = algorithms.eaSimple(pop, toolbox, cxpb=0.5, mutpb=0.2, ngen=100,stats=stats, halloffame=hof, verbose=True)
 
-    return pop, stats, hof
+    return [pop, logger, hof]
 
 
 
 if __name__ == "__main__":
     import matplotlib.pyplot as plt
     import plotter3D as plott
+    import time 
+    start = time.time()
 
 
 
-    pop, logger, hof = main()
+    [pop, logger, hof] = main()
+    finish = time.time()
+    print("tempo final: ",finish-start)
 
     gen = logger.select("gen")
-    fit = logger.select("max")
+    fit = logger.select("min")
     avg = logger.select("avg")
     plt.plot(gen,fit, '--r', label = "melhores individuos")
     plt.plot(gen,avg, '--b', label = "media dos individuos")
